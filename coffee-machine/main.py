@@ -55,8 +55,12 @@ def print_report():
 
 
 def check_resources(coffee):
-    return resources["water"] >= MENU[coffee]["ingredients"]["water"] and resources["coffee"] >= \
-           MENU[coffee]["ingredients"]["coffee"] and resources["milk"] >= MENU[coffee]["ingredients"]["milk"]
+    can_make = True
+    for item in MENU[coffee]["ingredients"]:
+        if MENU[coffee]["ingredients"][item] > resources[item]:
+            print(f"Sorry there is not enough {item}.")
+            can_make = False
+    return can_make
 
 
 def get_coins():
@@ -97,8 +101,6 @@ def main():
                 make_coffee(drink)
             else:
                 print("Sorry that's not enough money. Money refunded.")
-        else:
-            print("Sorry there is not enough water.")
 
 
 if __name__ == "__main__":
